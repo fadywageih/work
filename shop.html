@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech Market - المتجر</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="font-[Cairo] bg-[#0a0c0f] text-[#e5e7eb] overflow-x-hidden">
+
+    <!-- Loader -->
+    <div id="loader"
+        class="fixed inset-0 bg-[#0a0c0f] flex items-center justify-center z-[9999] transition-opacity duration-800">
+        <div class="text-center">
+            <div class="w-20 h-20 border-4 border-[#3b82f6]/20 border-t-[#3b82f6] rounded-full animate-spin mb-4"></div>
+            <p class="text-[#60a5fa] text-lg font-bold animate-pulse">جاري التحميل...</p>
+        </div>
+    </div>
+
+    <!-- Scroll Progress Bar -->
+    <div id="scrollProgress"
+        class="fixed top-0 left-0 h-1 bg-gradient-to-r from-[#3b82f6] via-[#a78bfa] to-[#f59e0b] z-[9998] transition-all duration-100">
+    </div>
+
+    <!-- Floating Action Button -->
+    <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})"
+        class="fixed bottom-5 md:bottom-8 right-5 md:right-8 w-12 h-12 md:w-14 md:h-14 bg-gradient-to-r from-[#3b82f6] to-[#a78bfa] rounded-full flex items-center justify-center text-[#0a0c0f] text-xl md:text-2xl shadow-lg z-[9997] transition-all duration-300 border-2 border-white/10 hover:scale-110 hover:shadow-[#3b82f6]/80">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Floating Particles -->
+    <div id="particles" class="fixed inset-0 pointer-events-none z-0"></div>
+
+    <!-- Navbar -->
+    <nav id="navbar"
+        class="fixed top-0 w-full bg-[#0a0c0f]/95 backdrop-blur-md z-50 transition-all duration-400 border-b border-[#3b82f6]/20">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between h-16 md:h-20">
+                <!-- Logo -->
+                <a href="index.html" class="block">
+                    <img src="Images/logo.jpg" alt="Tech Market" class="h-12 md:h-14 w-auto object-contain">
+                </a>
+
+                <!-- Desktop Menu -->
+                <div class="hidden lg:flex items-center gap-2">
+                    <a href="index.html#home"
+                        class="nav-link px-4 py-2 text-[#9ca3af] font-semibold rounded-xl hover:text-[#3b82f6] hover:bg-[#3b82f6]/10 transition-all duration-300">الرئيسية</a>
+                    <a href="shop.html"
+                        class="nav-link px-4 py-2 text-[#60a5fa] font-semibold rounded-xl bg-[#3b82f6]/15">المتجر</a>
+                    <a href="repair.html"
+                        class="nav-link px-4 py-2 text-[#9ca3af] font-semibold rounded-xl hover:text-[#3b82f6] hover:bg-[#3b82f6]/10 transition-all duration-300">الصيانة</a>
+                    <a href="index.html#education"
+                        class="nav-link px-4 py-2 text-[#9ca3af] font-semibold rounded-xl hover:text-[#3b82f6] hover:bg-[#3b82f6]/10 transition-all duration-300">تعلم</a>
+                    <a href="index.html#contact"
+                        class="nav-link px-4 py-2 text-[#9ca3af] font-semibold rounded-xl hover:text-[#3b82f6] hover:bg-[#3b82f6]/10 transition-all duration-300">اتصل
+                        بنا</a>
+                </div>
+
+                <!-- Actions -->
+                <div class="flex items-center gap-2 sm:gap-3">
+                    <a href="index.html#contact"
+                        class="hidden sm:flex items-center gap-2 bg-gradient-to-r from-[#3b82f6] to-[#a78bfa] text-[#0a0c0f] px-4 md:px-6 py-1.5 md:py-2 rounded-xl font-bold text-sm md:text-base shadow-lg shadow-[#3b82f6]/30 hover:shadow-[#3b82f6]/50 hover:-translate-y-1 transition-all duration-300">
+                        <i class="fas fa-phone"></i>
+                        <span class="hidden md:inline">تواصل</span>
+                    </a>
+
+                    <!-- Mobile Menu Button -->
+                    <button onclick="toggleMobileMenu()"
+                        class="lg:hidden flex items-center justify-center w-10 h-10 rounded-xl border-2 border-gray-700 text-gray-400 hover:border-[#3b82f6] hover:text-[#3b82f6] transition-all duration-300">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden lg:hidden bg-[#1e2126] border-t border-[#2d3138] py-4">
+            <div class="container mx-auto px-4 flex flex-col gap-2">
+                <a href="index.html#home" onclick="closeMobileMenu()"
+                    class="mobile-nav-link block py-3 text-center font-semibold text-[#9ca3af] rounded-lg hover:bg-gradient-to-r hover:from-[#3b82f6] hover:to-[#a78bfa] hover:text-[#0a0c0f] transition-all duration-300">الرئيسية</a>
+                <a href="shop.html" onclick="closeMobileMenu()"
+                    class="mobile-nav-link block py-3 text-center font-semibold text-[#0a0c0f] rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#a78bfa]">المتجر</a>
+                <a href="repair.html" onclick="closeMobileMenu()"
+                    class="mobile-nav-link block py-3 text-center font-semibold text-[#9ca3af] rounded-lg hover:bg-gradient-to-r hover:from-[#3b82f6] hover:to-[#a78bfa] hover:text-[#0a0c0f] transition-all duration-300">الصيانة</a>
+                <a href="index.html#education" onclick="closeMobileMenu()"
+                    class="mobile-nav-link block py-3 text-center font-semibold text-[#9ca3af] rounded-lg hover:bg-gradient-to-r hover:from-[#3b82f6] hover:to-[#a78bfa] hover:text-[#0a0c0f] transition-all duration-300">تعلم</a>
+                <a href="index.html#contact" onclick="closeMobileMenu()"
+                    class="mobile-nav-link block py-3 text-center font-semibold text-[#9ca3af] rounded-lg hover:bg-gradient-to-r hover:from-[#3b82f6] hover:to-[#a78bfa] hover:text-[#0a0c0f] transition-all duration-300">اتصل
+                    بنا</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+<section class="pt-28 md:pt-32 pb-12 bg-gradient-to-b from-[#0a0c0f] to-[#1e2126]">
+    <div class="container mx-auto px-4 text-center">
+        <h1 class="text-4xl md:text-5xl lg:text-6xl font-black mb-4 bg-gradient-to-r from-[#3b82f6] via-[#a78bfa] to-[#f59e0b] bg-clip-text text-transparent leading-[1.5]">
+            المتجر الإلكتروني
+        </h1>
+        <p class="-z-1 text-[#9ca3af] text-lg max-w-2xl mx-auto leading-[1.5]">
+            تصفح جميع المنتجات المتاحة لدينا بأفضل الأسعار
+        </p>
+    </div>
+</section>
+
+    <!-- Shop Section -->
+    <section class="py-12 bg-[#0a0c0f]">
+        <div class="container mx-auto px-4">
+
+            <!-- Filter Buttons -->
+            <div class="flex flex-wrap justify-center gap-4 mb-12" data-aos="fade-up">
+                <button onclick="filterProducts('all')"
+                    class="filter-btn px-6 md:px-8 py-3 rounded-full font-semibold transition-all duration-300 cursor-pointer border border-[#2d3138] bg-[#1e2126] text-[#9ca3af] shadow-lg hover:-translate-y-1 hover:shadow-[#3b82f6]/20 hover:border-[#3b82f6] hover:text-[#3b82f6]">الكل</button>
+                <button onclick="filterProducts('laptop')"
+                    class="filter-btn px-6 md:px-8 py-3 rounded-full font-semibold transition-all duration-300 cursor-pointer border border-[#2d3138] bg-[#1e2126] text-[#9ca3af] shadow-lg hover:-translate-y-1 hover:shadow-[#3b82f6]/20 hover:border-[#3b82f6] hover:text-[#3b82f6]">لابتوبات</button>
+                <button onclick="filterProducts('pc')"
+                    class="filter-btn px-6 md:px-8 py-3 rounded-full font-semibold transition-all duration-300 cursor-pointer border border-[#2d3138] bg-[#1e2126] text-[#9ca3af] shadow-lg hover:-translate-y-1 hover:shadow-[#3b82f6]/20 hover:border-[#3b82f6] hover:text-[#3b82f6]">بي
+                    سي</button>
+                <button onclick="filterProducts('monitor')"
+                    class="filter-btn px-6 md:px-8 py-3 rounded-full font-semibold transition-all duration-300 cursor-pointer border border-[#2d3138] bg-[#1e2126] text-[#9ca3af] shadow-lg hover:-translate-y-1 hover:shadow-[#3b82f6]/20 hover:border-[#3b82f6] hover:text-[#3b82f6]">شاشات</button>
+                <button onclick="filterProducts('accessories')"
+                    class="filter-btn px-6 md:px-8 py-3 rounded-full font-semibold transition-all duration-300 cursor-pointer border border-[#2d3138] bg-[#1e2126] text-[#9ca3af] shadow-lg hover:-translate-y-1 hover:shadow-[#3b82f6]/20 hover:border-[#3b82f6] hover:text-[#3b82f6]">اكسسوارات</button>
+                <button onclick="filterProducts('components')"
+                    class="filter-btn px-6 md:px-8 py-3 rounded-full font-semibold transition-all duration-300 cursor-pointer border border-[#2d3138] bg-[#1e2126] text-[#9ca3af] shadow-lg hover:-translate-y-1 hover:shadow-[#3b82f6]/20 hover:border-[#3b82f6] hover:text-[#3b82f6]">قطع
+                    غيار</button>
+            </div>
+
+            <!-- Products Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8" id="productsGrid">
+                <!-- لابتوبات -->
+                <div class="product-card bg-[#1e2126] rounded-3xl overflow-hidden transition-all duration-400 shadow-2xl border border-[#2d3138] hover:-translate-y-4 hover:scale-102 hover:shadow-[#3b82f6]/20 hover:border-[#3b82f6]"
+                    data-category="laptop" data-aos="fade-up">
+                    <div class="product-image h-48 md:h-56 overflow-hidden relative">
+                        <img src="Images/laptops/laptop1.jpg" alt="MacBook Pro"
+                            class="w-full h-full object-cover transition-transform duration-700">
+                        <span
+                            class="absolute top-4 right-4 px-3 py-1 md:px-4 md:py-2 bg-[#f59e0b] text-[#0a0c0f] rounded-full text-xs md:text-sm font-bold z-10 animate-pulse-custom">استيراد</span>
+                        <div
+                            class="absolute inset-0 bg-gradient-to-r from-[#3b82f6]/90 to-[#8b5cf6]/90 flex items-center justify-center gap-2 md:gap-4 opacity-0 transition-opacity duration-400">
+                            <div
+                                class="overlay-btn w-10 h-10 md:w-12 md:h-12 bg-[#0a0c0f] rounded-full flex items-center justify-center text-[#3b82f6] text-lg md:text-xl cursor-pointer transition-all duration-300 hover:bg-[#f59e0b] hover:text-[#0a0c0f] hover:scale-110">
+                                <i class="fas fa-heart"></i></div>
+                            <div
+                                class="overlay-btn w-10 h-10 md:w-12 md:h-12 bg-[#0a0c0f] rounded-full flex items-center justify-center text-[#3b82f6] text-lg md:text-xl cursor-pointer transition-all duration-300 hover:bg-[#f59e0b] hover:text-[#0a0c0f] hover:scale-110">
+                                <i class="fas fa-eye"></i></div>
+                            <div
+                                class="overlay-btn w-10 h-10 md:w-12 md:h-12 bg-[#0a0c0f] rounded-full flex items-center justify-center text-[#3b82f6] text-lg md:text-xl cursor-pointer transition-all duration-300 hover:bg-[#f59e0b] hover:text-[#0a0c0f] hover:scale-110">
+                                <i class="fas fa-shopping-cart"></i></div>
+                        </div>
+                    </div>
+                    <div class="p-4 md:p-5">
+                        <h3 class="text-lg md:text-xl font-bold mb-2 text-[#f3f4f6]">Dell Latitude E5250</h3>
+                        <p class="text-xs md:text-sm text-[#9ca3af] mb-3">Core i7, 8GB RAM, 256GB HDD</p>
+                        <div class="flex justify-between items-center mb-4">
+                            <div>
+                                <span class="text-xl md:text-2xl font-black text-[#3b82f6]">10,299 EGP</span>
+                                <span class="text-xs text-[#9ca3af] line-through mr-2">12,599 EGP</span>
+                            </div>
+                            <div class="flex text-[#f59e0b] gap-0.5 text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <button
+                            class="w-full bg-gradient-to-r from-[#3b82f6] to-[#a78bfa] text-[#0a0c0f] py-2 md:py-3 rounded-2xl font-bold text-sm md:text-base transition-all duration-300 shadow-lg shadow-[#3b82f6]/30 hover:shadow-[#3b82f6]/50 hover:-translate-y-1">شراء
+                            الآن</button>
+                    </div>
+                </div>
+
+                <div class="product-card bg-[#1e2126] rounded-3xl overflow-hidden transition-all duration-400 shadow-2xl border border-[#2d3138] hover:-translate-y-4 hover:scale-102 hover:shadow-[#3b82f6]/20 hover:border-[#3b82f6]"
+                    data-category="laptop" data-aos="fade-up" data-aos-delay="50">
+                    <div class="product-image h-48 md:h-56 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80"
+                            alt="Dell XPS" class="w-full h-full object-cover transition-transform duration-700">
+                        <span
+                            class="absolute top-4 right-4 px-3 py-1 md:px-4 md:py-2 bg-[#10b981] text-[#0a0c0f] rounded-full text-xs md:text-sm font-bold z-10 animate-pulse-custom">جديد</span>
+                        <div
+                            class="absolute inset-0 bg-gradient-to-r from-[#3b82f6]/90 to-[#8b5cf6]/90 flex items-center justify-center gap-2 md:gap-4 opacity-0 transition-opacity duration-400">
+                            <div
+                                class="overlay-btn w-10 h-10 md:w-12 md:h-12 bg-[#0a0c0f] rounded-full flex items-center justify-center text-[#3b82f6] text-lg md:text-xl cursor-pointer transition-all duration-300 hover:bg-[#f59e0b] hover:text-[#0a0c0f] hover:scale-110">
+                                <i class="fas fa-heart"></i></div>
+                            <div
+                                class="overlay-btn w-10 h-10 md:w-12 md:h-12 bg-[#0a0c0f] rounded-full flex items-center justify-center text-[#3b82f6] text-lg md:text-xl cursor-pointer transition-all duration-300 hover:bg-[#f59e0b] hover:text-[#0a0c0f] hover:scale-110">
+                                <i class="fas fa-eye"></i></div>
+                            <div
+                                class="overlay-btn w-10 h-10 md:w-12 md:h-12 bg-[#0a0c0f] rounded-full flex items-center justify-center text-[#3b82f6] text-lg md:text-xl cursor-pointer transition-all duration-300 hover:bg-[#f59e0b] hover:text-[#0a0c0f] hover:scale-110">
+                                <i class="fas fa-shopping-cart"></i></div>
+                        </div>
+                    </div>
+                    <div class="p-4 md:p-5">
+                        <h3 class="text-lg md:text-xl font-bold mb-2 text-[#f3f4f6]">Dell XPS 15</h3>
+                        <p class="text-xs md:text-sm text-[#9ca3af] mb-3">i9 • 32GB RAM • 1TB SSD • 4K OLED</p>
+                        <div class="flex justify-between items-center mb-4">
+                            <div>
+                                <span class="text-xl md:text-2xl font-black text-[#3b82f6]">20,199 EGP</span>
+                                <span class="text-xs text-[#9ca3af] line-through mr-2">20,499 EGP</span>
+                            </div>
+                            <div class="flex text-[#f59e0b] gap-0.5 text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                        </div>
+                        <button
+                            class="w-full bg-gradient-to-r from-[#3b82f6] to-[#a78bfa] text-[#0a0c0f] py-2 md:py-3 rounded-2xl font-bold text-sm md:text-base transition-all duration-300 shadow-lg shadow-[#3b82f6]/30 hover:shadow-[#3b82f6]/50 hover:-translate-y-1">شراء
+                            الآن</button>
+                    </div>
+                </div>
+
+                <div class="product-card bg-[#1e2126] rounded-3xl overflow-hidden transition-all duration-400 shadow-2xl border border-[#2d3138] hover:-translate-y-4 hover:scale-102 hover:shadow-[#3b82f6]/20 hover:border-[#3b82f6]"
+                    data-category="laptop" data-aos="fade-up" data-aos-delay="100">
+                    <div class="product-image h-48 md:h-56 overflow-hidden relative">
+                        <img src="Images/laptops/laptop2.jpg" alt="ASUS ROG"
+                            class="w-full h-full object-cover transition-transform duration-700">
+                        <span
+                            class="absolute top-4 right-4 px-3 py-1 md:px-4 md:py-2 bg-[#a78bfa] text-[#0a0c0f] rounded-full text-xs md:text-sm font-bold z-10 animate-pulse-custom">جديد</span>
+                        <div
+                            class="absolute inset-0 bg-gradient-to-r from-[#3b82f6]/90 to-[#8b5cf6]/90 flex items-center justify-center gap-2 md:gap-4 opacity-0 transition-opacity duration-400">
+                            <div
+                                class="overlay-btn w-10 h-10 md:w-12 md:h-12 bg-[#0a0c0f] rounded-full flex items-center justify-center text-[#3b82f6] text-lg md:text-xl cursor-pointer transition-all duration-300 hover:bg-[#f59e0b] hover:text-[#0a0c0f] hover:scale-110">
+                                <i class="fas fa-heart"></i></div>
+                            <div
+                                class="overlay-btn w-10 h-10 md:w-12 md:h-12 bg-[#0a0c0f] rounded-full flex items-center justify-center text-[#3b82f6] text-lg md:text-xl cursor-pointer transition-all duration-300 hover:bg-[#f59e0b] hover:text-[#0a0c0f] hover:scale-110">
+                                <i class="fas fa-eye"></i></div>
+                            <div
+                                class="overlay-btn w-10 h-10 md:w-12 md:h-12 bg-[#0a0c0f] rounded-full flex items-center justify-center text-[#3b82f6] text-lg md:text-xl cursor-pointer transition-all duration-300 hover:bg-[#f59e0b] hover:text-[#0a0c0f] hover:scale-110">
+                                <i class="fas fa-shopping-cart"></i></div>
+                        </div>
+                    </div>
+                    <div class="p-4 md:p-5">
+                        <h3 class="text-lg md:text-xl font-bold mb-2 text-[#f3f4f6]">Hp ZBook Firefly G8</h3>
+                        <p class="text-xs md:text-sm text-[#9ca3af] mb-3">32GB RAM 512GB SSD - 11th Gen i7-1185G7</p>
+                        <div class="flex justify-between items-center mb-4">
+                            <div>
+                                <span class="text-xl md:text-2xl font-black text-[#3b82f6]">25,599 EGP</span>
+                                <span class="text-xs text-[#9ca3af] line-through mr-2">28,899 EGP</span>
+                            </div>
+                            <div class="flex text-[#f59e0b] gap-0.5 text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <button
+                            class="w-full bg-gradient-to-r from-[#3b82f6] to-[#a78bfa] text-[#0a0c0f] py-2 md:py-3 rounded-2xl font-bold text-sm md:text-base transition-all duration-300 shadow-lg shadow-[#3b82f6]/30 hover:shadow-[#3b82f6]/50 hover:-translate-y-1">شراء
+                            الآن</button>
+                    </div>
+                </div>
+
+                <div class="product-card bg-[#1e2126] rounded-3xl overflow-hidden transition-all duration-400 shadow-2xl border border-[#2d3138] hover:-translate-y-4 hover:scale-102 hover:shadow-[#3b82f6]/20 hover:border-[#3b82f6]"
+                    data-category="laptop" data-aos="fade-up" data-aos-delay="150">
+                    <div class="product-image h-48 md:h-56 overflow-hidden relative">
+                        <img src="Images/laptops/laptop3.jpg" alt="Zbook G7"
+                            class="w-full h-full object-cover transition-transform duration-700">
+                        <span
+                            class="absolute top-4 right-4 px-3 py-1 md:px-4 md:py-2 bg-[#10b981] text-[#0a0c0f] rounded-full text-xs md:text-sm font-bold z-10 animate-pulse-custom">وصل
+                            حديثاً</span>
+                        <div
+                            class="absolute inset-0 bg-gradient-to-r from-[#3b82f6]/90 to-[#8b5cf6]/90 flex items-center justify-center gap-2 md:gap-4 opacity-0 transition-opacity duration-400">
+                            <div
+                                class="overlay-btn w-10 h-10 md:w-12 md:h-12 bg-[#0a0c0f] rounded-full flex items-center justify-center text-[#3b82f6] text-lg md:text-xl cursor-pointer transition-all duration-300 hover:bg-[#f59e0b] hover:text-[#0a0c0f] hover:scale-110">
+                                <i class="fas fa-heart"></i></div>
+                            <div
+                                class="overlay-btn w-10 h-10 md:w-12 md:h-12 bg-[#0a0c0f] rounded-full flex items-center justify-center text-[#3b82f6] text-lg md:text-xl cursor-pointer transition-all duration-300 hover:bg-[#f59e0b] hover:text-[#0a0c0f] hover:scale-110">
+                                <i class="fas fa-eye"></i></div>
+                            <div
+                                class="overlay-btn w-10 h-10 md:w-12 md:h-12 bg-[#0a0c0f] rounded-full flex items-center justify-center text-[#3b82f6] text-lg md:text-xl cursor-pointer transition-all duration-300 hover:bg-[#f59e0b] hover:text-[#0a0c0f] hover:scale-110">
+                                <i class="fas fa-shopping-cart"></i></div>
+                        </div>
+                    </div>
+                    <div class="p-4 md:p-5">
+                        <h3 class="text-lg md:text-xl font-bold mb-2 text-[#f3f4f6]">Hp Zbook G7</h3>
+                        <p class="text-xs md:text-sm text-[#9ca3af] mb-3">i7 10850H RAM 16.0. SSD512</p>
+                        <div class="flex justify-between items-center mb-4">
+                            <div>
+                                <span class="text-xl md:text-2xl font-black text-[#3b82f6]">15,990 EGP</span>
+                                <span class="text-xs text-[#9ca3af] line-through mr-2">18,199 EGP</span>
+                            </div>
+                            <div class="flex text-[#f59e0b] gap-0.5 text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <button
+                            class="w-full bg-gradient-to-r from-[#3b82f6] to-[#a78bfa] text-[#0a0c0f] py-2 md:py-3 rounded-2xl font-bold text-sm md:text-base transition-all duration-300 shadow-lg shadow-[#3b82f6]/30 hover:shadow-[#3b82f6]/50 hover:-translate-y-1">شراء
+                            الآن</button>
+                    </div>
+                </div>
+
+                <div class="product-card bg-[#1e2126] rounded-3xl overflow-hidden transition-all duration-400 shadow-2xl border border-[#2d3138] hover:-translate-y-4 hover:scale-102 hover:shadow-[#3b82f6]/20 hover:border-[#3b82f6]"
+                    data-category="laptop" data-aos="fade-up" data-aos-delay="150">
+                    <div class="product-image h-48 md:h-56 overflow-hidden relative">
+                        <img src="Images/laptops/laptop4.jpg" alt="Zbook G7"
+                            class="w-full h-full object-cover transition-transform duration-700">
+                        <span
+                            class="absolute top-4 right-4 px-3 py-1 md:px-4 md:py-2 bg-[#10b981] text-[#0a0c0f] rounded-full text-xs md:text-sm font-bold z-10 animate-pulse-custom">وصل
+                            حديثاً</span>
+                        <div
+                            class="absolute inset-0 bg-gradient-to-r from-[#3b82f6]/90 to-[#8b5cf6]/90 flex items-center justify-center gap-2 md:gap-4 opacity-0 transition-opacity duration-400">
+                            <div
+                                class="overlay-btn w-10 h-10 md:w-12 md:h-12 bg-[#0a0c0f] rounded-full flex items-center justify-center text-[#3b82f6] text-lg md:text-xl cursor-pointer transition-all duration-300 hover:bg-[#f59e0b] hover:text-[#0a0c0f] hover:scale-110">
+                                <i class="fas fa-heart"></i></div>
+                            <div
+                                class="overlay-btn w-10 h-10 md:w-12 md:h-12 bg-[#0a0c0f] rounded-full flex items-center justify-center text-[#3b82f6] text-lg md:text-xl cursor-pointer transition-all duration-300 hover:bg-[#f59e0b] hover:text-[#0a0c0f] hover:scale-110">
+                                <i class="fas fa-eye"></i></div>
+                            <div
+                                class="overlay-btn w-10 h-10 md:w-12 md:h-12 bg-[#0a0c0f] rounded-full flex items-center justify-center text-[#3b82f6] text-lg md:text-xl cursor-pointer transition-all duration-300 hover:bg-[#f59e0b] hover:text-[#0a0c0f] hover:scale-110">
+                                <i class="fas fa-shopping-cart"></i></div>
+                        </div>
+                    </div>
+                    <div class="p-4 md:p-5">
+                        <h3 class="text-lg md:text-xl font-bold mb-2 text-[#f3f4f6]">HP Zbook 14u G4</h3>
+                        <p class="text-xs md:text-sm text-[#9ca3af] mb-3"> i7-7500U</p>
+                        <div class="flex justify-between items-center mb-4">
+                            <div>
+                                <span class="text-xl md:text-2xl font-black text-[#3b82f6]">12,990 EGP</span>
+                                <span class="text-xs text-[#9ca3af] line-through mr-2">13,199 EGP</span>
+                            </div>
+                            <div class="flex text-[#f59e0b] gap-0.5 text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <button
+                            class="w-full bg-gradient-to-r from-[#3b82f6] to-[#a78bfa] text-[#0a0c0f] py-2 md:py-3 rounded-2xl font-bold text-sm md:text-base transition-all duration-300 shadow-lg shadow-[#3b82f6]/30 hover:shadow-[#3b82f6]/50 hover:-translate-y-1">شراء
+                            الآن</button>
+                    </div>
+                </div>
+                <div class="product-card bg-[#1e2126] rounded-3xl overflow-hidden transition-all duration-400 shadow-2xl border border-[#2d3138] hover:-translate-y-4 hover:scale-102 hover:shadow-[#3b82f6]/20 hover:border-[#3b82f6]"
+                    data-category="laptop" data-aos="fade-up" data-aos-delay="150">
+                    <div class="product-image h-48 md:h-56 overflow-hidden relative">
+                        <img src="Images/laptops/laptop7.jpg" alt="Zbook G7"
+                            class="w-full h-full object-cover transition-transform duration-700">
+                        <span
+                            class="absolute top-4 right-4 px-3 py-1 md:px-4 md:py-2 bg-[#10b981] text-[#0a0c0f] rounded-full text-xs md:text-sm font-bold z-10 animate-pulse-custom">وصل
+                            حديثاً</span>
+                        <div
+                            class="absolute inset-0 bg-gradient-to-r from-[#3b82f6]/90 to-[#8b5cf6]/90 flex items-center justify-center gap-2 md:gap-4 opacity-0 transition-opacity duration-400">
+                            <div
+                                class="overlay-btn w-10 h-10 md:w-12 md:h-12 bg-[#0a0c0f] rounded-full flex items-center justify-center text-[#3b82f6] text-lg md:text-xl cursor-pointer transition-all duration-300 hover:bg-[#f59e0b] hover:text-[#0a0c0f] hover:scale-110">
+                                <i class="fas fa-heart"></i></div>
+                            <div
+                                class="overlay-btn w-10 h-10 md:w-12 md:h-12 bg-[#0a0c0f] rounded-full flex items-center justify-center text-[#3b82f6] text-lg md:text-xl cursor-pointer transition-all duration-300 hover:bg-[#f59e0b] hover:text-[#0a0c0f] hover:scale-110">
+                                <i class="fas fa-eye"></i></div>
+                            <div
+                                class="overlay-btn w-10 h-10 md:w-12 md:h-12 bg-[#0a0c0f] rounded-full flex items-center justify-center text-[#3b82f6] text-lg md:text-xl cursor-pointer transition-all duration-300 hover:bg-[#f59e0b] hover:text-[#0a0c0f] hover:scale-110">
+                                <i class="fas fa-shopping-cart"></i></div>
+                        </div>
+                    </div>
+                    <div class="p-4 md:p-5">
+                        <h3 class="text-lg md:text-xl font-bold mb-2 text-[#f3f4f6]">HP Zbook G8</h3>
+                        <p class="text-xs md:text-sm text-[#9ca3af] mb-3">Corei7 11th Gen Processor 16GB RAM 512 SSD 4GB
+                            GDDR6</p>
+                        <div class="flex justify-between items-center mb-4">
+                            <div>
+                                <span class="text-xl md:text-2xl font-black text-[#3b82f6]">26,990 EGP</span>
+                                <span class="text-xs text-[#9ca3af] line-through mr-2">28,199 EGP</span>
+                            </div>
+                            <div class="flex text-[#f59e0b] gap-0.5 text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <button
+                            class="w-full bg-gradient-to-r from-[#3b82f6] to-[#a78bfa] text-[#0a0c0f] py-2 md:py-3 rounded-2xl font-bold text-sm md:text-base transition-all duration-300 shadow-lg shadow-[#3b82f6]/30 hover:shadow-[#3b82f6]/50 hover:-translate-y-1">شراء
+                            الآن</button>
+                    </div>
+                </div>
+                <div class="product-card bg-[#1e2126] rounded-3xl overflow-hidden transition-all duration-400 shadow-2xl border border-[#2d3138] hover:-translate-y-4 hover:scale-102 hover:shadow-[#3b82f6]/20 hover:border-[#3b82f6]"
+                    data-category="laptop" data-aos="fade-up" data-aos-delay="150">
+                    <div class="product-image h-48 md:h-56 overflow-hidden relative">
+                        <img src="Images/laptops/laptop5.jpg" alt="Zbook G7"
+                            class="w-full h-full object-cover transition-transform duration-700">
+                        <span
+                            class="absolute top-4 right-4 px-3 py-1 md:px-4 md:py-2 bg-[#10b981] text-[#0a0c0f] rounded-full text-xs md:text-sm font-bold z-10 animate-pulse-custom">وصل
+                            حديثاً</span>
+                        <div
+                            class="absolute inset-0 bg-gradient-to-r from-[#3b82f6]/90 to-[#8b5cf6]/90 flex items-center justify-center gap-2 md:gap-4 opacity-0 transition-opacity duration-400">
+                            <div
+                                class="overlay-btn w-10 h-10 md:w-12 md:h-12 bg-[#0a0c0f] rounded-full flex items-center justify-center text-[#3b82f6] text-lg md:text-xl cursor-pointer transition-all duration-300 hover:bg-[#f59e0b] hover:text-[#0a0c0f] hover:scale-110">
+                                <i class="fas fa-heart"></i></div>
+                            <div
+                                class="overlay-btn w-10 h-10 md:w-12 md:h-12 bg-[#0a0c0f] rounded-full flex items-center justify-center text-[#3b82f6] text-lg md:text-xl cursor-pointer transition-all duration-300 hover:bg-[#f59e0b] hover:text-[#0a0c0f] hover:scale-110">
+                                <i class="fas fa-eye"></i></div>
+                            <div
+                                class="overlay-btn w-10 h-10 md:w-12 md:h-12 bg-[#0a0c0f] rounded-full flex items-center justify-center text-[#3b82f6] text-lg md:text-xl cursor-pointer transition-all duration-300 hover:bg-[#f59e0b] hover:text-[#0a0c0f] hover:scale-110">
+                                <i class="fas fa-shopping-cart"></i></div>
+                        </div>
+                    </div>
+                    <div class="p-4 md:p-5">
+                        <h3 class="text-lg md:text-xl font-bold mb-2 text-[#f3f4f6]">Dell Latitude E 5550</h3>
+                        <p class="text-xs md:text-sm text-[#9ca3af] mb-3">Corei7 11th Gen Processor 16GB RAM 512 SSD 4GB
+                            GDDR6</p>
+                        <div class="flex justify-between items-center mb-4">
+                            <div>
+                                <span class="text-xl md:text-2xl font-black text-[#3b82f6]">26,990 EGP</span>
+                                <span class="text-xs text-[#9ca3af] line-through mr-2">28,199 EGP</span>
+                            </div>
+                            <div class="flex text-[#f59e0b] gap-0.5 text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <button
+                            class="w-full bg-gradient-to-r from-[#3b82f6] to-[#a78bfa] text-[#0a0c0f] py-2 md:py-3 rounded-2xl font-bold text-sm md:text-base transition-all duration-300 shadow-lg shadow-[#3b82f6]/30 hover:shadow-[#3b82f6]/50 hover:-translate-y-1">شراء
+                            الآن</button>
+                    </div>
+                </div>
+                <div class="product-card bg-[#1e2126] rounded-3xl overflow-hidden transition-all duration-400 shadow-2xl border border-[#2d3138] hover:-translate-y-4 hover:scale-102 hover:shadow-[#3b82f6]/20 hover:border-[#3b82f6]"
+                    data-category="laptop" data-aos="fade-up" data-aos-delay="150">
+                    <div class="product-image h-48 md:h-56 overflow-hidden relative">
+                        <img src="Images/laptops/laptop6.jpg" alt="Zbook G7"
+                            class="w-full h-full object-cover transition-transform duration-700">
+                        <span
+                            class="absolute top-4 right-4 px-3 py-1 md:px-4 md:py-2 bg-[#10b981] text-[#0a0c0f] rounded-full text-xs md:text-sm font-bold z-10 animate-pulse-custom">وصل
+                            حديثاً</span>
+                        <div
+                            class="absolute inset-0 bg-gradient-to-r from-[#3b82f6]/90 to-[#8b5cf6]/90 flex items-center justify-center gap-2 md:gap-4 opacity-0 transition-opacity duration-400">
+                            <div
+                                class="overlay-btn w-10 h-10 md:w-12 md:h-12 bg-[#0a0c0f] rounded-full flex items-center justify-center text-[#3b82f6] text-lg md:text-xl cursor-pointer transition-all duration-300 hover:bg-[#f59e0b] hover:text-[#0a0c0f] hover:scale-110">
+                                <i class="fas fa-heart"></i></div>
+                            <div
+                                class="overlay-btn w-10 h-10 md:w-12 md:h-12 bg-[#0a0c0f] rounded-full flex items-center justify-center text-[#3b82f6] text-lg md:text-xl cursor-pointer transition-all duration-300 hover:bg-[#f59e0b] hover:text-[#0a0c0f] hover:scale-110">
+                                <i class="fas fa-eye"></i></div>
+                            <div
+                                class="overlay-btn w-10 h-10 md:w-12 md:h-12 bg-[#0a0c0f] rounded-full flex items-center justify-center text-[#3b82f6] text-lg md:text-xl cursor-pointer transition-all duration-300 hover:bg-[#f59e0b] hover:text-[#0a0c0f] hover:scale-110">
+                                <i class="fas fa-shopping-cart"></i></div>
+                        </div>
+                    </div>
+                    <div class="p-4 md:p-5">
+                        <h3 class="text-lg md:text-xl font-bold mb-2 text-[#f3f4f6]">DELL Latitude 7400</h3>
+                        <p class="text-xs md:text-sm text-[#9ca3af] mb-3">Core i7, 16GB RAM, 512GB SSD</p>
+                        <div class="flex justify-between items-center mb-4">
+                            <div>
+                                <span class="text-xl md:text-2xl font-black text-[#3b82f6]">23,000 EGP</span>
+                                <span class="text-xs text-[#9ca3af] line-through mr-2">25,199 EGP</span>
+                            </div>
+                            <div class="flex text-[#f59e0b] gap-0.5 text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <button
+                            class="w-full bg-gradient-to-r from-[#3b82f6] to-[#a78bfa] text-[#0a0c0f] py-2 md:py-3 rounded-2xl font-bold text-sm md:text-base transition-all duration-300 shadow-lg shadow-[#3b82f6]/30 hover:shadow-[#3b82f6]/50 hover:-translate-y-1">شراء
+                            الآن</button>
+                    </div>
+                </div>
+                <div class="product-card bg-[#1e2126] rounded-3xl overflow-hidden transition-all duration-400 shadow-2xl border border-[#2d3138] hover:-translate-y-4 hover:scale-102 hover:shadow-[#3b82f6]/20 hover:border-[#3b82f6]"
+                    data-category="laptop" data-aos="fade-up" data-aos-delay="150">
+                    <div class="product-image h-48 md:h-56 overflow-hidden relative">
+                        <img src="Images/laptops/laptop8.jpg" alt="Zbook G7"
+                            class="w-full h-full object-cover transition-transform duration-700">
+                        <span
+                            class="absolute top-4 right-4 px-3 py-1 md:px-4 md:py-2 bg-[#10b981] text-[#0a0c0f] rounded-full text-xs md:text-sm font-bold z-10 animate-pulse-custom">وصل
+                            حديثاً</span>
+                        <div
+                            class="absolute inset-0 bg-gradient-to-r from-[#3b82f6]/90 to-[#8b5cf6]/90 flex items-center justify-center gap-2 md:gap-4 opacity-0 transition-opacity duration-400">
+                            <div
+                                class="overlay-btn w-10 h-10 md:w-12 md:h-12 bg-[#0a0c0f] rounded-full flex items-center justify-center text-[#3b82f6] text-lg md:text-xl cursor-pointer transition-all duration-300 hover:bg-[#f59e0b] hover:text-[#0a0c0f] hover:scale-110">
+                                <i class="fas fa-heart"></i></div>
+                            <div
+                                class="overlay-btn w-10 h-10 md:w-12 md:h-12 bg-[#0a0c0f] rounded-full flex items-center justify-center text-[#3b82f6] text-lg md:text-xl cursor-pointer transition-all duration-300 hover:bg-[#f59e0b] hover:text-[#0a0c0f] hover:scale-110">
+                                <i class="fas fa-eye"></i></div>
+                            <div
+                                class="overlay-btn w-10 h-10 md:w-12 md:h-12 bg-[#0a0c0f] rounded-full flex items-center justify-center text-[#3b82f6] text-lg md:text-xl cursor-pointer transition-all duration-300 hover:bg-[#f59e0b] hover:text-[#0a0c0f] hover:scale-110">
+                                <i class="fas fa-shopping-cart"></i></div>
+                        </div>
+                    </div>
+                    <div class="p-4 md:p-5">
+                        <h3 class="text-lg md:text-xl font-bold mb-2 text-[#f3f4f6]">Dell Latitude 5520</h3>
+                        <p class="text-xs md:text-sm text-[#9ca3af] mb-3"> i7-1185G7 up to 4.7GHz, 16GB RAM, 512GB SSD
+                        </p>
+                        <div class="flex justify-between items-center mb-4">
+                            <div>
+                                <span class="text-xl md:text-2xl font-black text-[#3b82f6]">29,000 EGP</span>
+                                <span class="text-xs text-[#9ca3af] line-through mr-2">34,199 EGP</span>
+                            </div>
+                            <div class="flex text-[#f59e0b] gap-0.5 text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <button
+                            class="w-full bg-gradient-to-r from-[#3b82f6] to-[#a78bfa] text-[#0a0c0f] py-2 md:py-3 rounded-2xl font-bold text-sm md:text-base transition-all duration-300 shadow-lg shadow-[#3b82f6]/30 hover:shadow-[#3b82f6]/50 hover:-translate-y-1">شراء
+                            الآن</button>
+                    </div>
+                </div>
+
+                <div class="product-card bg-[#1e2126] rounded-3xl overflow-hidden transition-all duration-400 shadow-2xl border border-[#2d3138] hover:-translate-y-4 hover:scale-102 hover:shadow-[#3b82f6]/20 hover:border-[#3b82f6]"
+                    data-category="laptop" data-aos="fade-up" data-aos-delay="50">
+                    <div class="product-image h-48 md:h-56 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80"
+                            alt="Dell XPS" class="w-full h-full object-cover transition-transform duration-700">
+                        <span
+                            class="absolute top-4 right-4 px-3 py-1 md:px-4 md:py-2 bg-[#10b981] text-[#0a0c0f] rounded-full text-xs md:text-sm font-bold z-10 animate-pulse-custom">جديد</span>
+                        <div
+                            class="absolute inset-0 bg-gradient-to-r from-[#3b82f6]/90 to-[#8b5cf6]/90 flex items-center justify-center gap-2 md:gap-4 opacity-0 transition-opacity duration-400">
+                            <div
+                                class="overlay-btn w-10 h-10 md:w-12 md:h-12 bg-[#0a0c0f] rounded-full flex items-center justify-center text-[#3b82f6] text-lg md:text-xl cursor-pointer transition-all duration-300 hover:bg-[#f59e0b] hover:text-[#0a0c0f] hover:scale-110">
+                                <i class="fas fa-heart"></i></div>
+                            <div
+                                class="overlay-btn w-10 h-10 md:w-12 md:h-12 bg-[#0a0c0f] rounded-full flex items-center justify-center text-[#3b82f6] text-lg md:text-xl cursor-pointer transition-all duration-300 hover:bg-[#f59e0b] hover:text-[#0a0c0f] hover:scale-110">
+                                <i class="fas fa-eye"></i></div>
+                            <div
+                                class="overlay-btn w-10 h-10 md:w-12 md:h-12 bg-[#0a0c0f] rounded-full flex items-center justify-center text-[#3b82f6] text-lg md:text-xl cursor-pointer transition-all duration-300 hover:bg-[#f59e0b] hover:text-[#0a0c0f] hover:scale-110">
+                                <i class="fas fa-shopping-cart"></i></div>
+                        </div>
+                    </div>
+                    <div class="p-4 md:p-5">
+                        <h3 class="text-lg md:text-xl font-bold mb-2 text-[#f3f4f6]">EliteBook 745 G5</h3>
+                        <p class="text-xs md:text-sm text-[#9ca3af] mb-3">AMD Ryzen 5pro 3500U, 8GB RAM, 256GB SSD</p>
+                        <div class="flex justify-between items-center mb-4">
+                            <div>
+                                <span class="text-xl md:text-2xl font-black text-[#3b82f6]">13,199 EGP</span>
+                                <span class="text-xs text-[#9ca3af] line-through mr-2">15,499 EGP</span>
+                            </div>
+                            <div class="flex text-[#f59e0b] gap-0.5 text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                        </div>
+                        <button
+                            class="w-full bg-gradient-to-r from-[#3b82f6] to-[#a78bfa] text-[#0a0c0f] py-2 md:py-3 rounded-2xl font-bold text-sm md:text-base transition-all duration-300 shadow-lg shadow-[#3b82f6]/30 hover:shadow-[#3b82f6]/50 hover:-translate-y-1">شراء
+                            الآن</button>
+                    </div>
+                </div>
+                <div class="product-card bg-[#1e2126] rounded-3xl overflow-hidden transition-all duration-400 shadow-2xl border border-[#2d3138] hover:-translate-y-4 hover:scale-102 hover:shadow-[#3b82f6]/20 hover:border-[#3b82f6]"
+                    data-category="laptop" data-aos="fade-up" data-aos-delay="100">
+                    <div class="product-image h-48 md:h-56 overflow-hidden relative">
+                        <img src="Images/laptops/laptop10.jpg" alt="ASUS ROG"
+                            class="w-full h-full object-cover transition-transform duration-700">
+                        <span
+                            class="absolute top-4 right-4 px-3 py-1 md:px-4 md:py-2 bg-[#a78bfa] text-[#0a0c0f] rounded-full text-xs md:text-sm font-bold z-10 animate-pulse-custom">جديد</span>
+                        <div
+                            class="absolute inset-0 bg-gradient-to-r from-[#3b82f6]/90 to-[#8b5cf6]/90 flex items-center justify-center gap-2 md:gap-4 opacity-0 transition-opacity duration-400">
+                            <div
+                                class="overlay-btn w-10 h-10 md:w-12 md:h-12 bg-[#0a0c0f] rounded-full flex items-center justify-center text-[#3b82f6] text-lg md:text-xl cursor-pointer transition-all duration-300 hover:bg-[#f59e0b] hover:text-[#0a0c0f] hover:scale-110">
+                                <i class="fas fa-heart"></i></div>
+                            <div
+                                class="overlay-btn w-10 h-10 md:w-12 md:h-12 bg-[#0a0c0f] rounded-full flex items-center justify-center text-[#3b82f6] text-lg md:text-xl cursor-pointer transition-all duration-300 hover:bg-[#f59e0b] hover:text-[#0a0c0f] hover:scale-110">
+                                <i class="fas fa-eye"></i></div>
+                            <div
+                                class="overlay-btn w-10 h-10 md:w-12 md:h-12 bg-[#0a0c0f] rounded-full flex items-center justify-center text-[#3b82f6] text-lg md:text-xl cursor-pointer transition-all duration-300 hover:bg-[#f59e0b] hover:text-[#0a0c0f] hover:scale-110">
+                                <i class="fas fa-shopping-cart"></i></div>
+                        </div>
+                    </div>
+                    <div class="p-4 md:p-5">
+                        <h3 class="text-lg md:text-xl font-bold mb-2 text-[#f3f4f6]">Latitude 5420</h3>
+                        <p class="text-xs md:text-sm text-[#9ca3af] mb-3">i5-1145G7, 8.0GB RAM, 256GB SSD</p>
+                        <div class="flex justify-between items-center mb-4">
+                            <div>
+                                <span class="text-xl md:text-2xl font-black text-[#3b82f6]">18,000 EGP</span>
+                                <span class="text-xs text-[#9ca3af] line-through mr-2">20,899 EGP</span>
+                            </div>
+                            <div class="flex text-[#f59e0b] gap-0.5 text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <button
+                            class="w-full bg-gradient-to-r from-[#3b82f6] to-[#a78bfa] text-[#0a0c0f] py-2 md:py-3 rounded-2xl font-bold text-sm md:text-base transition-all duration-300 shadow-lg shadow-[#3b82f6]/30 hover:shadow-[#3b82f6]/50 hover:-translate-y-1">شراء
+                            الآن</button>
+                    </div>
+                </div>
+                <!-- بي سي -->
+                <div class="product-card bg-[#1e2126] rounded-3xl overflow-hidden transition-all duration-400 shadow-2xl border border-[#2d3138] hover:-translate-y-4 hover:scale-102 hover:shadow-[#3b82f6]/20 hover:border-[#3b82f6]"
+                    data-category="pc" data-aos="fade-up" data-aos-delay="200">
+                    <div class="product-image h-48 md:h-56 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1587202372634-32705e3e568e?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80"
+                            alt="Gaming PC" class="w-full h-full object-cover transition-transform duration-700">
+                        <span
+                            class="absolute top-4 right-4 px-3 py-1 md:px-4 md:py-2 bg-[#a78bfa] text-[#0a0c0f] rounded-full text-xs md:text-sm font-bold z-10 animate-pulse-custom">جيمنج</span>
+                        <div
+                            class="absolute inset-0 bg-gradient-to-r from-[#3b82f6]/90 to-[#8b5cf6]/90 flex items-center justify-center gap-2 md:gap-4 opacity-0 transition-opacity duration-400">
+                            <div
+                                class="overlay-btn w-10 h-10 md:w-12 md:h-12 bg-[#0a0c0f] rounded-full flex items-center justify-center text-[#3b82f6] text-lg md:text-xl cursor-pointer transition-all duration-300 hover:bg-[#f59e0b] hover:text-[#0a0c0f] hover:scale-110">
+                                <i class="fas fa-heart"></i></div>
+                            <div
+                                class="overlay-btn w-10 h-10 md:w-12 md:h-12 bg-[#0a0c0f] rounded-full flex items-center justify-center text-[#3b82f6] text-lg md:text-xl cursor-pointer transition-all duration-300 hover:bg-[#f59e0b] hover:text-[#0a0c0f] hover:scale-110">
+                                <i class="fas fa-eye"></i></div>
+                            <div
+                                class="overlay-btn w-10 h-10 md:w-12 md:h-12 bg-[#0a0c0f] rounded-full flex items-center justify-center text-[#3b82f6] text-lg md:text-xl cursor-pointer transition-all duration-300 hover:bg-[#f59e0b] hover:text-[#0a0c0f] hover:scale-110">
+                                <i class="fas fa-shopping-cart"></i></div>
+                        </div>
+                    </div>
+                    <div class="p-4 md:p-5">
+                        <h3 class="text-lg md:text-xl font-bold mb-2 text-[#f3f4f6]">PC Gaming Ultra</h3>
+                        <p class="text-xs md:text-sm text-[#9ca3af] mb-3">i9 • RTX 4090 • 64GB • 2TB NVMe</p>
+                        <div class="flex justify-between items-center mb-4">
+                            <div>
+                                <span class="text-xl md:text-2xl font-black text-[#3b82f6]">$3,499</span>
+                                <span class="text-xs text-[#9ca3af] line-through mr-2">$3,999</span>
+                            </div>
+                            <div class="flex text-[#f59e0b] gap-0.5 text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <button
+                            class="w-full bg-gradient-to-r from-[#3b82f6] to-[#a78bfa] text-[#0a0c0f] py-2 md:py-3 rounded-2xl font-bold text-sm md:text-base transition-all duration-300 shadow-lg shadow-[#3b82f6]/30 hover:shadow-[#3b82f6]/50 hover:-translate-y-1">شراء
+                            الآن</button>
+                    </div>
+                </div>
+
+                <div class="product-card bg-[#1e2126] rounded-3xl overflow-hidden transition-all duration-400 shadow-2xl border border-[#2d3138] hover:-translate-y-4 hover:scale-102 hover:shadow-[#3b82f6]/20 hover:border-[#3b82f6]"
+                    data-category="pc" data-aos="fade-up" data-aos-delay="250">
+                    <div class="product-image h-48 md:h-56 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1593640408182-31c70c8268f5?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80"
+                            alt="Workstation PC" class="w-full h-full object-cover transition-transform duration-700">
+                        <span
+                            class="absolute top-4 right-4 px-3 py-1 md:px-4 md:py-2 bg-[#10b981] text-[#0a0c0f] rounded-full text-xs md:text-sm font-bold z-10 animate-pulse-custom">محطة
+                            عمل</span>
+                        <div
+                            class="absolute inset-0 bg-gradient-to-r from-[#3b82f6]/90 to-[#8b5cf6]/90 flex items-center justify-center gap-2 md:gap-4 opacity-0 transition-opacity duration-400">
+                            <div
+                                class="overlay-btn w-10 h-10 md:w-12 md:h-12 bg-[#0a0c0f] rounded-full flex items-center justify-center text-[#3b82f6] text-lg md:text-xl cursor-pointer transition-all duration-300 hover:bg-[#f59e0b] hover:text-[#0a0c0f] hover:scale-110">
+                                <i class="fas fa-heart"></i></div>
+                            <div
+                                class="overlay-btn w-10 h-10 md:w-12 md:h-12 bg-[#0a0c0f] rounded-full flex items-center justify-center text-[#3b82f6] text-lg md:text-xl cursor-pointer transition-all duration-300 hover:bg-[#f59e0b] hover:text-[#0a0c0f] hover:scale-110">
+                                <i class="fas fa-eye"></i></div>
+                            <div
+                                class="overlay-btn w-10 h-10 md:w-12 md:h-12 bg-[#0a0c0f] rounded-full flex items-center justify-center text-[#3b82f6] text-lg md:text-xl cursor-pointer transition-all duration-300 hover:bg-[#f59e0b] hover:text-[#0a0c0f] hover:scale-110">
+                                <i class="fas fa-shopping-cart"></i></div>
+                        </div>
+                    </div>
+                    <div class="p-4 md:p-5">
+                        <h3 class="text-lg md:text-xl font-bold mb-2 text-[#f3f4f6]">Workstation Pro</h3>
+                        <p class="text-xs md:text-sm text-[#9ca3af] mb-3">Xeon • 128GB • RTX A6000 • 4TB</p>
+                        <div class="flex justify-between items-center mb-4">
+                            <div>
+                                <span class="text-xl md:text-2xl font-black text-[#3b82f6]">$5,999</span>
+                                <span class="text-xs text-[#9ca3af] line-through mr-2">$6,999</span>
+                            </div>
+                            <div class="flex text-[#f59e0b] gap-0.5 text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                        </div>
+                        <button
+                            class="w-full bg-gradient-to-r from-[#3b82f6] to-[#a78bfa] text-[#0a0c0f] py-2 md:py-3 rounded-2xl font-bold text-sm md:text-base transition-all duration-300 shadow-lg shadow-[#3b82f6]/30 hover:shadow-[#3b82f6]/50 hover:-translate-y-1">شراء
+                            الآن</button>
+                    </div>
+                </div>
+
+                <!-- شاشات -->
+                <div class="product-card bg-[#1e2126] rounded-3xl overflow-hidden transition-all duration-400 shadow-2xl border border-[#2d3138] hover:-translate-y-4 hover:scale-102 hover:shadow-[#3b82f6]/20 hover:border-[#3b82f6]"
+                    data-category="monitor" data-aos="fade-up" data-aos-delay="300">
+                    <div class="product-image h-48 md:h-56 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80"
+                            alt="Samsung Monitor" class="w-full h-full object-cover transition-transform duration-700">
+                        <span
+                            class="absolute top-4 right-4 px-3 py-1 md:px-4 md:py-2 bg-[#f59e0b] text-[#0a0c0f] rounded-full text-xs md:text-sm font-bold z-10 animate-pulse-custom">خصم
+                            25%</span>
+                        <div
+                            class="absolute inset-0 bg-gradient-to-r from-[#3b82f6]/90 to-[#8b5cf6]/90 flex items-center justify-center gap-2 md:gap-4 opacity-0 transition-opacity duration-400">
+                            <div
+                                class="overlay-btn w-10 h-10 md:w-12 md:h-12 bg-[#0a0c0f] rounded-full flex items-center justify-center text-[#3b82f6] text-lg md:text-xl cursor-pointer transition-all duration-300 hover:bg-[#f59e0b] hover:text-[#0a0c0f] hover:scale-110">
+                                <i class="fas fa-heart"></i></div>
+                            <div
+                                class="overlay-btn w-10 h-10 md:w-12 md:h-12 bg-[#0a0c0f] rounded-full flex items-center justify-center text-[#3b82f6] text-lg md:text-xl cursor-pointer transition-all duration-300 hover:bg-[#f59e0b] hover:text-[#0a0c0f] hover:scale-110">
+                                <i class="fas fa-eye"></i></div>
+                            <div
+                                class="overlay-btn w-10 h-10 md:w-12 md:h-12 bg-[#0a0c0f] rounded-full flex items-center justify-center text-[#3b82f6] text-lg md:text-xl cursor-pointer transition-all duration-300 hover:bg-[#f59e0b] hover:text-[#0a0c0f] hover:scale-110">
+                                <i class="fas fa-shopping-cart"></i></div>
+                        </div>
+                    </div>
+                    <div class="p-4 md:p-5">
+                        <h3 class="text-lg md:text-xl font-bold mb-2 text-[#f3f4f6]">Samsung Odyssey G9</h3>
+                        <p class="text-xs md:text-sm text-[#9ca3af] mb-3">49" • 240Hz • QLED • 1ms</p>
+                        <div class="flex justify-between items-center mb-4">
+                            <div>
+                                <span class="text-xl md:text-2xl font-black text-[#3b82f6]">$999</span>
+                                <span class="text-xs text-[#9ca3af] line-through mr-2">$1,299</span>
+                            </div>
+                            <div class="flex text-[#f59e0b] gap-0.5 text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <button
+                            class="w-full bg-gradient-to-r from-[#3b82f6] to-[#a78bfa] text-[#0a0c0f] py-2 md:py-3 rounded-2xl font-bold text-sm md:text-base transition-all duration-300 shadow-lg shadow-[#3b82f6]/30 hover:shadow-[#3b82f6]/50 hover:-translate-y-1">شراء
+                            الآن</button>
+                    </div>
+                </div>
+
+                <div class="product-card bg-[#1e2126] rounded-3xl overflow-hidden transition-all duration-400 shadow-2xl border border-[#2d3138] hover:-translate-y-4 hover:scale-102 hover:shadow-[#3b82f6]/20 hover:border-[#3b82f6]"
+                    data-category="monitor" data-aos="fade-up" data-aos-delay="350">
+                    <div class="product-image h-48 md:h-56 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1547119957-637f8679db91?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80"
+                            alt="LG Monitor" class="w-full h-full object-cover transition-transform duration-700">
+                        <span
+                            class="absolute top-4 right-4 px-3 py-1 md:px-4 md:py-2 bg-[#10b981] text-[#0a0c0f] rounded-full text-xs md:text-sm font-bold z-10 animate-pulse-custom">الأفضل
+                            مبيعاً</span>
+                        <div
+                            class="absolute inset-0 bg-gradient-to-r from-[#3b82f6]/90 to-[#8b5cf6]/90 flex items-center justify-center gap-2 md:gap-4 opacity-0 transition-opacity duration-400">
+                            <div
+                                class="overlay-btn w-10 h-10 md:w-12 md:h-12 bg-[#0a0c0f] rounded-full flex items-center justify-center text-[#3b82f6] text-lg md:text-xl cursor-pointer transition-all duration-300 hover:bg-[#f59e0b] hover:text-[#0a0c0f] hover:scale-110">
+                                <i class="fas fa-heart"></i></div>
+                            <div
+                                class="overlay-btn w-10 h-10 md:w-12 md:h-12 bg-[#0a0c0f] rounded-full flex items-center justify-center text-[#3b82f6] text-lg md:text-xl cursor-pointer transition-all duration-300 hover:bg-[#f59e0b] hover:text-[#0a0c0f] hover:scale-110">
+                                <i class="fas fa-eye"></i></div>
+                            <div
+                                class="overlay-btn w-10 h-10 md:w-12 md:h-12 bg-[#0a0c0f] rounded-full flex items-center justify-center text-[#3b82f6] text-lg md:text-xl cursor-pointer transition-all duration-300 hover:bg-[#f59e0b] hover:text-[#0a0c0f] hover:scale-110">
+                                <i class="fas fa-shopping-cart"></i></div>
+                        </div>
+                    </div>
+                    <div class="p-4 md:p-5">
+                        <h3 class="text-lg md:text-xl font-bold mb-2 text-[#f3f4f6]">LG UltraGear 27"</h3>
+                        <p class="text-xs md:text-sm text-[#9ca3af] mb-3">27" • 165Hz • IPS • 1ms</p>
+                        <div class="flex justify-between items-center mb-4">
+                            <div>
+                                <span class="text-xl md:text-2xl font-black text-[#3b82f6]">$299</span>
+                                <span class="text-xs text-[#9ca3af] line-through mr-2">$399</span>
+                            </div>
+                            <div class="flex text-[#f59e0b] gap-0.5 text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <button
+                            class="w-full bg-gradient-to-r from-[#3b82f6] to-[#a78bfa] text-[#0a0c0f] py-2 md:py-3 rounded-2xl font-bold text-sm md:text-base transition-all duration-300 shadow-lg shadow-[#3b82f6]/30 hover:shadow-[#3b82f6]/50 hover:-translate-y-1">شراء
+                            الآن</button>
+                    </div>
+                </div>
+
+                <!-- اكسسوارات -->
+                <div class="product-card bg-[#1e2126] rounded-3xl overflow-hidden transition-all duration-400 shadow-2xl border border-[#2d3138] hover:-translate-y-4 hover:scale-102 hover:shadow-[#3b82f6]/20 hover:border-[#3b82f6]"
+                    data-category="accessories" data-aos="fade-up" data-aos-delay="400">
+                    <div class="product-image h-48 md:h-56 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1613141411244-0e4ac259d21a?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80"
+                            alt="Mechanical Keyboard"
+                            class="w-full h-full object-cover transition-transform duration-700">
+                        <span
+                            class="absolute top-4 right-4 px-3 py-1 md:px-4 md:py-2 bg-[#a78bfa] text-[#0a0c0f] rounded-full text-xs md:text-sm font-bold z-10 animate-pulse-custom">ميكانيكال</span>
+                        <div
+                            class="absolute inset-0 bg-gradient-to-r from-[#3b82f6]/90 to-[#8b5cf6]/90 flex items-center justify-center gap-2 md:gap-4 opacity-0 transition-opacity duration-400">
+                            <div
+                                class="overlay-btn w-10 h-10 md:w-12 md:h-12 bg-[#0a0c0f] rounded-full flex items-center justify-center text-[#3b82f6] text-lg md:text-xl cursor-pointer transition-all duration-300 hover:bg-[#f59e0b] hover:text-[#0a0c0f] hover:scale-110">
+                                <i class="fas fa-heart"></i></div>
+                            <div
+                                class="overlay-btn w-10 h-10 md:w-12 md:h-12 bg-[#0a0c0f] rounded-full flex items-center justify-center text-[#3b82f6] text-lg md:text-xl cursor-pointer transition-all duration-300 hover:bg-[#f59e0b] hover:text-[#0a0c0f] hover:scale-110">
+                                <i class="fas fa-eye"></i></div>
+                            <div
+                                class="overlay-btn w-10 h-10 md:w-12 md:h-12 bg-[#0a0c0f] rounded-full flex items-center justify-center text-[#3b82f6] text-lg md:text-xl cursor-pointer transition-all duration-300 hover:bg-[#f59e0b] hover:text-[#0a0c0f] hover:scale-110">
+                                <i class="fas fa-shopping-cart"></i></div>
+                        </div>
+                    </div>
+                    <div class="p-4 md:p-5">
+                        <h3 class="text-lg md:text-xl font-bold mb-2 text-[#f3f4f6]">Keychron K8 Pro</h3>
+                        <p class="text-xs md:text-sm text-[#9ca3af] mb-3">ميكانيكال • Bluetooth • RGB</p>
+                        <div class="flex justify-between items-center mb-4">
+                            <div>
+                                <span class="text-xl md:text-2xl font-black text-[#3b82f6]">$89</span>
+                                <span class="text-xs text-[#9ca3af] line-through mr-2">$129</span>
+                            </div>
+                            <div class="flex text-[#f59e0b] gap-0.5 text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <button
+                            class="w-full bg-gradient-to-r from-[#3b82f6] to-[#a78bfa] text-[#0a0c0f] py-2 md:py-3 rounded-2xl font-bold text-sm md:text-base transition-all duration-300 shadow-lg shadow-[#3b82f6]/30 hover:shadow-[#3b82f6]/50 hover:-translate-y-1">شراء
+                            الآن</button>
+                    </div>
+                </div>
+
+                <div class="product-card bg-[#1e2126] rounded-3xl overflow-hidden transition-all duration-400 shadow-2xl border border-[#2d3138] hover:-translate-y-4 hover:scale-102 hover:shadow-[#3b82f6]/20 hover:border-[#3b82f6]"
+                    data-category="accessories" data-aos="fade-up" data-aos-delay="450">
+                    <div class="product-image h-48 md:h-56 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80"
+                            alt="Gaming Mouse" class="w-full h-full object-cover transition-transform duration-700">
+                        <span
+                            class="absolute top-4 right-4 px-3 py-1 md:px-4 md:py-2 bg-[#f59e0b] text-[#0a0c0f] rounded-full text-xs md:text-sm font-bold z-10 animate-pulse-custom">جيمنج</span>
+                        <div
+                            class="absolute inset-0 bg-gradient-to-r from-[#3b82f6]/90 to-[#8b5cf6]/90 flex items-center justify-center gap-2 md:gap-4 opacity-0 transition-opacity duration-400">
+                            <div
+                                class="overlay-btn w-10 h-10 md:w-12 md:h-12 bg-[#0a0c0f] rounded-full flex items-center justify-center text-[#3b82f6] text-lg md:text-xl cursor-pointer transition-all duration-300 hover:bg-[#f59e0b] hover:text-[#0a0c0f] hover:scale-110">
+                                <i class="fas fa-heart"></i></div>
+                            <div
+                                class="overlay-btn w-10 h-10 md:w-12 md:h-12 bg-[#0a0c0f] rounded-full flex items-center justify-center text-[#3b82f6] text-lg md:text-xl cursor-pointer transition-all duration-300 hover:bg-[#f59e0b] hover:text-[#0a0c0f] hover:scale-110">
+                                <i class="fas fa-eye"></i></div>
+                            <div
+                                class="overlay-btn w-10 h-10 md:w-12 md:h-12 bg-[#0a0c0f] rounded-full flex items-center justify-center text-[#3b82f6] text-lg md:text-xl cursor-pointer transition-all duration-300 hover:bg-[#f59e0b] hover:text-[#0a0c0f] hover:scale-110">
+                                <i class="fas fa-shopping-cart"></i></div>
+                        </div>
+                    </div>
+                    <div class="p-4 md:p-5">
+                        <h3 class="text-lg md:text-xl font-bold mb-2 text-[#f3f4f6]">Logitech G Pro X</h3>
+                        <p class="text-xs md:text-sm text-[#9ca3af] mb-3">25K DPI • لاسلكي • 70h</p>
+                        <div class="flex justify-between items-center mb-4">
+                            <div>
+                                <span class="text-xl md:text-2xl font-black text-[#3b82f6]">$79</span>
+                                <span class="text-xs text-[#9ca3af] line-through mr-2">$99</span>
+                            </div>
+                            <div class="flex text-[#f59e0b] gap-0.5 text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <button
+                            class="w-full bg-gradient-to-r from-[#3b82f6] to-[#a78bfa] text-[#0a0c0f] py-2 md:py-3 rounded-2xl font-bold text-sm md:text-base transition-all duration-300 shadow-lg shadow-[#3b82f6]/30 hover:shadow-[#3b82f6]/50 hover:-translate-y-1">شراء
+                            الآن</button>
+                    </div>
+                </div>
+
+                <!-- قطع غيار -->
+                <div class="product-card bg-[#1e2126] rounded-3xl overflow-hidden transition-all duration-400 shadow-2xl border border-[#2d3138] hover:-translate-y-4 hover:scale-102 hover:shadow-[#3b82f6]/20 hover:border-[#3b82f6]"
+                    data-category="components" data-aos="fade-up" data-aos-delay="500">
+                    <div class="product-image h-48 md:h-56 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80"
+                            alt="RAM" class="w-full h-full object-cover transition-transform duration-700">
+                        <span
+                            class="absolute top-4 right-4 px-3 py-1 md:px-4 md:py-2 bg-[#10b981] text-[#0a0c0f] rounded-full text-xs md:text-sm font-bold z-10 animate-pulse-custom">DDR5</span>
+                        <div
+                            class="absolute inset-0 bg-gradient-to-r from-[#3b82f6]/90 to-[#8b5cf6]/90 flex items-center justify-center gap-2 md:gap-4 opacity-0 transition-opacity duration-400">
+                            <div
+                                class="overlay-btn w-10 h-10 md:w-12 md:h-12 bg-[#0a0c0f] rounded-full flex items-center justify-center text-[#3b82f6] text-lg md:text-xl cursor-pointer transition-all duration-300 hover:bg-[#f59e0b] hover:text-[#0a0c0f] hover:scale-110">
+                                <i class="fas fa-heart"></i></div>
+                            <div
+                                class="overlay-btn w-10 h-10 md:w-12 md:h-12 bg-[#0a0c0f] rounded-full flex items-center justify-center text-[#3b82f6] text-lg md:text-xl cursor-pointer transition-all duration-300 hover:bg-[#f59e0b] hover:text-[#0a0c0f] hover:scale-110">
+                                <i class="fas fa-eye"></i></div>
+                            <div
+                                class="overlay-btn w-10 h-10 md:w-12 md:h-12 bg-[#0a0c0f] rounded-full flex items-center justify-center text-[#3b82f6] text-lg md:text-xl cursor-pointer transition-all duration-300 hover:bg-[#f59e0b] hover:text-[#0a0c0f] hover:scale-110">
+                                <i class="fas fa-shopping-cart"></i></div>
+                        </div>
+                    </div>
+                    <div class="p-4 md:p-5">
+                        <h3 class="text-lg md:text-xl font-bold mb-2 text-[#f3f4f6]">Corsair Vengeance</h3>
+                        <p class="text-xs md:text-sm text-[#9ca3af] mb-3">32GB DDR5 • 6000MHz • RGB</p>
+                        <div class="flex justify-between items-center mb-4">
+                            <div>
+                                <span class="text-xl md:text-2xl font-black text-[#3b82f6]">$149</span>
+                                <span class="text-xs text-[#9ca3af] line-through mr-2">$179</span>
+                            </div>
+                            <div class="flex text-[#f59e0b] gap-0.5 text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <button
+                            class="w-full bg-gradient-to-r from-[#3b82f6] to-[#a78bfa] text-[#0a0c0f] py-2 md:py-3 rounded-2xl font-bold text-sm md:text-base transition-all duration-300 shadow-lg shadow-[#3b82f6]/30 hover:shadow-[#3b82f6]/50 hover:-translate-y-1">شراء
+                            الآن</button>
+                    </div>
+                </div>
+
+                <div class="product-card bg-[#1e2126] rounded-3xl overflow-hidden transition-all duration-400 shadow-2xl border border-[#2d3138] hover:-translate-y-4 hover:scale-102 hover:shadow-[#3b82f6]/20 hover:border-[#3b82f6]"
+                    data-category="components" data-aos="fade-up" data-aos-delay="550">
+                    <div class="product-image h-48 md:h-56 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1555680202-c86f0e12f086?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80"
+                            alt="SSD" class="w-full h-full object-cover transition-transform duration-700">
+                        <span
+                            class="absolute top-4 right-4 px-3 py-1 md:px-4 md:py-2 bg-[#a78bfa] text-[#0a0c0f] rounded-full text-xs md:text-sm font-bold z-10 animate-pulse-custom">NVMe</span>
+                        <div
+                            class="absolute inset-0 bg-gradient-to-r from-[#3b82f6]/90 to-[#8b5cf6]/90 flex items-center justify-center gap-2 md:gap-4 opacity-0 transition-opacity duration-400">
+                            <div
+                                class="overlay-btn w-10 h-10 md:w-12 md:h-12 bg-[#0a0c0f] rounded-full flex items-center justify-center text-[#3b82f6] text-lg md:text-xl cursor-pointer transition-all duration-300 hover:bg-[#f59e0b] hover:text-[#0a0c0f] hover:scale-110">
+                                <i class="fas fa-heart"></i></div>
+                            <div
+                                class="overlay-btn w-10 h-10 md:w-12 md:h-12 bg-[#0a0c0f] rounded-full flex items-center justify-center text-[#3b82f6] text-lg md:text-xl cursor-pointer transition-all duration-300 hover:bg-[#f59e0b] hover:text-[#0a0c0f] hover:scale-110">
+                                <i class="fas fa-eye"></i></div>
+                            <div
+                                class="overlay-btn w-10 h-10 md:w-12 md:h-12 bg-[#0a0c0f] rounded-full flex items-center justify-center text-[#3b82f6] text-lg md:text-xl cursor-pointer transition-all duration-300 hover:bg-[#f59e0b] hover:text-[#0a0c0f] hover:scale-110">
+                                <i class="fas fa-shopping-cart"></i></div>
+                        </div>
+                    </div>
+                    <div class="p-4 md:p-5">
+                        <h3 class="text-lg md:text-xl font-bold mb-2 text-[#f3f4f6]">Samsung 990 Pro</h3>
+                        <p class="text-xs md:text-sm text-[#9ca3af] mb-3">2TB NVMe • 7450MB/s</p>
+                        <div class="flex justify-between items-center mb-4">
+                            <div>
+                                <span class="text-xl md:text-2xl font-black text-[#3b82f6]">$159</span>
+                                <span class="text-xs text-[#9ca3af] line-through mr-2">$199</span>
+                            </div>
+                            <div class="flex text-[#f59e0b] gap-0.5 text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <button
+                            class="w-full bg-gradient-to-r from-[#3b82f6] to-[#a78bfa] text-[#0a0c0f] py-2 md:py-3 rounded-2xl font-bold text-sm md:text-base transition-all duration-300 shadow-lg shadow-[#3b82f6]/30 hover:shadow-[#3b82f6]/50 hover:-translate-y-1">شراء
+                            الآن</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pagination -->
+            <div class="flex justify-center items-center gap-2 mt-12">
+                <button
+                    class="w-10 h-10 rounded-full bg-[#1e2126] border border-[#2d3138] text-[#9ca3af] hover:bg-gradient-to-r hover:from-[#3b82f6] hover:to-[#a78bfa] hover:text-[#0a0c0f] hover:border-transparent transition-all duration-300">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+                <button
+                    class="w-10 h-10 rounded-full bg-gradient-to-r from-[#3b82f6] to-[#a78bfa] text-[#0a0c0f] font-bold">1</button>
+                <button
+                    class="w-10 h-10 rounded-full bg-[#1e2126] border border-[#2d3138] text-[#9ca3af] hover:bg-gradient-to-r hover:from-[#3b82f6] hover:to-[#a78bfa] hover:text-[#0a0c0f] hover:border-transparent transition-all duration-300">2</button>
+                <button
+                    class="w-10 h-10 rounded-full bg-[#1e2126] border border-[#2d3138] text-[#9ca3af] hover:bg-gradient-to-r hover:from-[#3b82f6] hover:to-[#a78bfa] hover:text-[#0a0c0f] hover:border-transparent transition-all duration-300">3</button>
+                <span class="text-[#9ca3af]">...</span>
+                <button
+                    class="w-10 h-10 rounded-full bg-[#1e2126] border border-[#2d3138] text-[#9ca3af] hover:bg-gradient-to-r hover:from-[#3b82f6] hover:to-[#a78bfa] hover:text-[#0a0c0f] hover:border-transparent transition-all duration-300">10</button>
+                <button
+                    class="w-10 h-10 rounded-full bg-[#1e2126] border border-[#2d3138] text-[#9ca3af] hover:bg-gradient-to-r hover:from-[#3b82f6] hover:to-[#a78bfa] hover:text-[#0a0c0f] hover:border-transparent transition-all duration-300">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-[#2d3138] text-[#9ca3af] py-10 md:py-12 border-t border-[#2d3138] mt-12">
+        <div class="container mx-auto px-4 text-center">
+            <div class="flex items-center justify-center gap-3 mb-6">
+                <img src="Images/logo.jpg" alt="Tech Market" class="h-10 md:h-12 w-auto object-contain">
+            </div>
+            <p class="mb-6 text-[#9ca3af] text-sm md:text-base">وجهتك الأولى لبيع وشراء وصيانة الأجهزة</p>
+
+            <div class="flex justify-center gap-3 md:gap-4 mb-8">
+                <a href="#"
+                    class="social-link w-10 h-10 md:w-12 md:h-12 bg-[#1e2126] rounded-full flex items-center justify-center transition-all duration-300 border border-[#3b82f6]/20 text-[#9ca3af] hover:border-[#3b82f6] hover:text-[#3b82f6] hover:-translate-y-1 hover:shadow-[0_10px_20px_-5px_rgba(59,130,246,0.5)]">
+                    <i class="fab fa-facebook-f text-sm md:text-base"></i>
+                </a>
+                <a href="#"
+                    class="social-link w-10 h-10 md:w-12 md:h-12 bg-[#1e2126] rounded-full flex items-center justify-center transition-all duration-300 border border-[#3b82f6]/20 text-[#9ca3af] hover:border-[#3b82f6] hover:text-[#3b82f6] hover:-translate-y-1 hover:shadow-[0_10px_20px_-5px_rgba(59,130,246,0.5)]">
+                    <i class="fab fa-instagram text-sm md:text-base"></i>
+                </a>
+                <a href="#"
+                    class="social-link w-10 h-10 md:w-12 md:h-12 bg-[#1e2126] rounded-full flex items-center justify-center transition-all duration-300 border border-[#3b82f6]/20 text-[#9ca3af] hover:border-[#3b82f6] hover:text-[#3b82f6] hover:-translate-y-1 hover:shadow-[0_10px_20px_-5px_rgba(59,130,246,0.5)]">
+                    <i class="fab fa-twitter text-sm md:text-base"></i>
+                </a>
+            </div>
+
+            <p class="text-xs md:text-sm text-gray-600">© 2024 Tech Market. جميع الحقوق محفوظة</p>
+        </div>
+    </footer>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/shop.js"></script>
+
+</body>
+
+</html>

@@ -108,6 +108,9 @@
 }
 
 /* Product Card Hover */
+.product-card {
+    cursor: pointer;
+}
 .product-card:hover .product-image img {
     transform: scale(1.15) rotate(2deg);
 }

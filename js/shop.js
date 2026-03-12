@@ -27,8 +27,7 @@ function filterProducts(category) {
             show = true;
         } else if (category === 'pc-import' && cat === 'pc' && badgeText.includes('استيراد')) {
             show = true;
-        } else if (![ 'laptop-new','laptop-import','pc-new','pc-import' ].includes(category) && cat === category) {
-            // covers monitor, accessories, components
+        } else if (!['laptop-new','laptop-import','pc-new','pc-import'].includes(category) && cat === category) {
             show = true;
         }
 
@@ -52,7 +51,7 @@ function filterProducts(category) {
     visibleProducts.sort((a, b) => {
         const priceA = parsePrice(a.querySelector('span[class*="text-[#3b82f6]"]')?.textContent || '0');
         const priceB = parsePrice(b.querySelector('span[class*="text-[#3b82f6]"]')?.textContent || '0');
-        return priceB - priceA; // descending
+        return priceB - priceA;
     });
 
     // Reorder in DOM
@@ -71,12 +70,10 @@ function parsePrice(priceText) {
 function orderProduct(productName, productSpecs, productPrice) {
     const phoneNumber = '201270114646';
     
-    // Get current date and time
     const now = new Date();
     const date = now.toLocaleDateString('ar-EG');
     const time = now.toLocaleTimeString('ar-EG');
     
-    // Create message with price included
     const message = `🛒 *طلب شراء جديد* 🛒
     
 *المنتج:* ${productName}
@@ -88,10 +85,7 @@ function orderProduct(productName, productSpecs, productPrice) {
 
 تم إرسال الطلب من موقع Tech Market`;
     
-    // Encode message
     const encodedMessage = encodeURIComponent(message);
-    
-    // Open WhatsApp
     window.open(`https://wa.me/${phoneNumber}?text=${encodedMessage}`, '_blank');
 }
 
@@ -102,7 +96,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const category = urlParams.get('category') || 'all';
     filterProducts(category);
     
-    // Set first filter button as active if none active
     if (!document.querySelector('.filter-btn.active')) {
         document.querySelectorAll('.filter-btn')[0]?.classList.add('active');
     }
@@ -114,45 +107,142 @@ document.addEventListener('DOMContentLoaded', function() {
         button.addEventListener('click', function(e) {
             e.preventDefault();
             
-            // Get product card
             const card = this.closest('.product-card');
             
-            // Get product details
             const productName = card.querySelector('h3').textContent;
             const productSpecs = card.querySelector('.text-xs.md\\:text-sm, .text-sm.md\\:text-base').textContent;
             const priceElement = card.querySelector('.text-\\[\\#3b82f6\\]');
             const productPrice = priceElement ? priceElement.textContent : 'السعر غير محدد';
             
-            // Call order function
             orderProduct(productName, productSpecs, productPrice);
         });
     });
+
+    // ========== الكود النهائي لفتح المودال مع الرسالة المخصصة ==========
+    const modal = document.getElementById('productModal');
+    const modalClose = document.getElementById('modalClose');
+    const modalMainImage = document.getElementById('modalMainImage');
+    const modalThumb1 = document.getElementById('modalThumb1');
+    const modalThumb2 = document.getElementById('modalThumb2');
+    const modalThumb3 = document.getElementById('modalThumb3');
+    const modalProductTitle = document.getElementById('modalProductTitle');
+    const modalProductSpecs = document.getElementById('modalProductSpecs');
+    const modalCustomMessage = document.getElementById('modalCustomMessage');
+
+    document.querySelectorAll('.product-card').forEach(card => {
+        card.addEventListener('click', function(e) {
+            if (e.target.closest('button') || e.target.closest('.overlay-btn')) return;
+
+            // --- 1. Update Images ---
+            const mainImg = card.querySelector('img')?.src || '';
+            let images = [];
+            
+            if (card.dataset.images) {
+                images = card.dataset.images.split(',').map(u => u.trim()).filter(Boolean);
+            }
+
+            if (images.length === 0) {
+                images = [mainImg, mainImg, mainImg];
+            } else if (images.length === 1) {
+                images = [images[0], images[0], images[0]];
+            } else if (images.length === 2) {
+                images.push(images[0]);
+            }
+
+            modalMainImage.src = images[0] || mainImg;
+            modalThumb1.src = images[0] || mainImg;
+            modalThumb2.src = images[1] || mainImg;
+            modalThumb3.src = images[2] || mainImg;
+
+            // --- 2. Update Text Details ---
+            const productName = card.querySelector('h3')?.textContent || 'منتج';
+            const productSpecs = card.querySelector('.text-xs.md\\:text-sm, .text-sm.md\\:text-base')?.textContent || '';
+            const priceEl = card.querySelector('.text-\\[\\#3b82f6\\]');
+            const price = priceEl ? priceEl.textContent : '';
+            const ratingStars = card.querySelector('.flex.text-\\[\\#f59e0b\\]')?.innerHTML || '<i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>';
+            
+            // الرسالة المخصصة من data-message (دي أهم نقطة)
+            const customMessage = card.dataset.message || '🔥 عرض خاص - لفترة محدودة - استيراد بحالة ممتازة 🔥';
+
+            if (modalProductTitle) {
+                modalProductTitle.textContent = productName;
+            }
+
+            if (modalProductSpecs) {
+                modalProductSpecs.innerHTML = `<p class="text-2xl font-medium text-[#f3f4f6]">${productSpecs}</p>`;
+            }
+
+            if (modalCustomMessage) {
+                modalCustomMessage.innerHTML = customMessage;
+            }
+
+            const priceSection = document.getElementById('modalPrice');
+            if (priceSection) priceSection.textContent = price;
+
+            const ratingContainer = document.querySelector('#productModal .flex.text-\\[\\#f59e0b\\].gap-1.text-lg');
+            if (ratingContainer) ratingContainer.innerHTML = ratingStars;
+
+            // --- 3. Update Buy Button ---
+            const modalBuyBtn = document.getElementById('modalBuyBtn');
+            if (modalBuyBtn) {
+                const newBuyBtn = modalBuyBtn.cloneNode(true);
+                modalBuyBtn.parentNode.replaceChild(newBuyBtn, modalBuyBtn);
+                
+                newBuyBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    orderProduct(productName, productSpecs, price);
+                });
+            }
+
+            // --- 4. Show Modal ---
+            modal.classList.remove('hidden');
+        });
+    });
+
+    // close events
+    if (modalClose) {
+        modalClose.addEventListener('click', () => {
+            modal.classList.add('hidden');
+        });
+    }
+    
+    if (modal) {
+        modal.addEventListener('click', e => {
+            if (e.target === modal) {
+                modal.classList.add('hidden');
+            }
+        });
+    }
+
+    window.setMainImage = function(src) {
+        const mainImage = document.getElementById('modalMainImage');
+        if (mainImage) {
+            mainImage.src = src;
+        }
+    };
 });
+
+// Slider Code
 let currentSlide = 0;
 const slides = document.querySelectorAll('#sliderWrapper > div');
 const totalSlides = slides.length;
 const sliderWrapper = document.getElementById('sliderWrapper');
 let slideInterval;
 
-// Initialize slider
 function initSlider() {
     if (sliderWrapper) {
         updateSlider();
         startAutoSlide();
         
-        // Pause auto slide on hover
         sliderWrapper.addEventListener('mouseenter', stopAutoSlide);
         sliderWrapper.addEventListener('mouseleave', startAutoSlide);
     }
 }
 
-// Update slider position
 function updateSlider() {
     if (sliderWrapper) {
-        // For RTL layout, translate right (positive values) instead of left
         sliderWrapper.style.transform = `translateX(${currentSlide * 100}%)`;
         
-        // Update dots
         document.querySelectorAll('.slider-dot').forEach((dot, index) => {
             if (index === currentSlide) {
                 dot.classList.add('bg-[#3b82f6]', 'w-6', 'md:w-8');
@@ -165,28 +255,24 @@ function updateSlider() {
     }
 }
 
-// Next slide
 function nextSlide() {
     currentSlide = (currentSlide + 1) % totalSlides;
     updateSlider();
     resetAutoSlide();
 }
 
-// Previous slide
 function prevSlide() {
     currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
     updateSlider();
     resetAutoSlide();
 }
 
-// Go to specific slide
 function goToSlide(index) {
     currentSlide = index;
     updateSlider();
     resetAutoSlide();
 }
 
-// Auto slide
 function startAutoSlide() {
     if (!slideInterval) {
         slideInterval = setInterval(nextSlide, 5000);
@@ -205,11 +291,9 @@ function resetAutoSlide() {
     startAutoSlide();
 }
 
-// Initialize slider when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
     initSlider();
     
-    // Make slider functions global
     window.nextSlide = nextSlide;
     window.prevSlide = prevSlide;
     window.goToSlide = goToSlide;

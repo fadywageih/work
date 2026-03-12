@@ -125,4 +125,10 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 document.addEventListener('DOMContentLoaded', function() {
     // Create particles
     createParticles();
-});
+}); 
+function setMainImage(src) {
+    const mainImage = document.getElementById('modalMainImage');
+    if (mainImage) {
+        mainImage.src = src;
+    }
+}

@@ -18,7 +18,7 @@ function sendRepairRequest() {
     }
     
     // WhatsApp number - بالصيغة الدولية
-    const phoneNumber = '201060344638';
+    const phoneNumber = '201270114646';
     
     // Create WhatsApp message
     const message = `🔧 *طلب صيانة جديد* 🔧
